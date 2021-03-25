@@ -27,6 +27,35 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  ScrollController _scrollController = ScrollController();
+  int scrollSpeed = 50;
+
+  _scrollBottom() {
+    double maxExtent = _scrollController.position.maxScrollExtent;
+    double distanceDifference = maxExtent - _scrollController.offset;
+    double durationDouble = distanceDifference / scrollSpeed;
+
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      curve: Curves.linear,
+      duration: Duration(seconds: durationDouble.toInt()),
+    );
+  }
+
+  _scrollTop() {
+    double minExtent = _scrollController.position.minScrollExtent;
+    double distanceDifference = _scrollController.offset - minExtent;
+    double durationDouble = distanceDifference / scrollSpeed;
+
+    ScrollStartNotification(metrics: null, context: context);
+
+    _scrollController.animateTo(
+      _scrollController.position.minScrollExtent,
+      curve: Curves.linear,
+      duration: Duration(seconds: durationDouble.toInt()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,16 +64,17 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_upward),
-          onPressed: null,
+          onPressed: () => _scrollTop(),
         ),
         actions: [
           IconButton(
             icon: Icon(Icons.arrow_downward),
-            onPressed: null,
+            onPressed: () => _scrollBottom(),
           )
         ],
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Center(
           child: Column(
             children: [
