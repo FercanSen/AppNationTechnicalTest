@@ -9,8 +9,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Flowing Text",
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color(0xFF343A40),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(),
@@ -29,36 +30,41 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("AppNation Flowing Text"),
-          centerTitle: true,
+      appBar: AppBar(
+        title: Text("AppNation Flowing Text"),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_upward),
+          onPressed: null,
         ),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                const SizedBox(height: 5),
-                RaisedButton(
-                  child: Text("Auto Scroll"),
-                  // todo: add current status of the scrolling here
-                  onPressed: () {},
-                ),
-                ListView.builder(
-                  physics: ScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: 100,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(
-                        "This is a sample text to be scrolled",
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-                  },
-                )
-              ],
-            ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.arrow_downward),
+            onPressed: null,
+          )
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              ListView.builder(
+                physics: ScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: 100,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(
+                      "This is a sample text to be scrolled",
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                },
+              )
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
