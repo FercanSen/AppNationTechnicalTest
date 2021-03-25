@@ -30,30 +30,29 @@ class _MyHomePageState extends State<MyHomePage> {
   ScrollController _scrollController = ScrollController();
   int scrollSpeed = 50;
 
-  _scrollBottom() {
+  _scroll(bool scrollBottom) {
     double maxExtent = _scrollController.position.maxScrollExtent;
-    double distanceDifference = maxExtent - _scrollController.offset;
-    double durationDouble = distanceDifference / scrollSpeed;
-
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      curve: Curves.linear,
-      duration: Duration(seconds: durationDouble.toInt()),
-    );
-  }
-
-  _scrollTop() {
     double minExtent = _scrollController.position.minScrollExtent;
-    double distanceDifference = _scrollController.offset - minExtent;
-    double durationDouble = distanceDifference / scrollSpeed;
 
-    ScrollStartNotification(metrics: null, context: context);
+    if (scrollBottom) {
+      double distanceDifference = maxExtent - _scrollController.offset;
+      double durationDouble = distanceDifference / scrollSpeed;
 
-    _scrollController.animateTo(
-      _scrollController.position.minScrollExtent,
-      curve: Curves.linear,
-      duration: Duration(seconds: durationDouble.toInt()),
-    );
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        curve: Curves.linear,
+        duration: Duration(seconds: durationDouble.toInt()),
+      );
+    } else {
+      double distanceDifference = _scrollController.offset - minExtent;
+      double durationDouble = distanceDifference / scrollSpeed;
+
+      _scrollController.animateTo(
+        _scrollController.position.minScrollExtent,
+        curve: Curves.linear,
+        duration: Duration(seconds: durationDouble.toInt()),
+      );
+    }
   }
 
   @override
@@ -64,12 +63,12 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_upward),
-          onPressed: () => _scrollTop(),
+          onPressed: () => _scroll(false), // scrollBottom = false
         ),
         actions: [
           IconButton(
             icon: Icon(Icons.arrow_downward),
-            onPressed: () => _scrollBottom(),
+            onPressed: () => _scroll(true), //scrollBottom = ture
           )
         ],
       ),
