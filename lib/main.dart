@@ -71,6 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
               setState(() {
                 topScrollPressed = !topScrollPressed;
+                bottomScrollPressed = false;
               });
               _scroll(false); // scrollBottom = false
             }),
@@ -81,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
               setState(() {
                 bottomScrollPressed = !bottomScrollPressed;
+                topScrollPressed = false;
               });
               _scroll(true); //scrollBottom = ture
             },
